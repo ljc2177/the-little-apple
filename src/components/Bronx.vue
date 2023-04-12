@@ -3,15 +3,6 @@
   <div id="app">
     <img src="@/assets/LittleAppleLogo.png">
     <h2 v-if="showHome">{{ gameDescription1 }}</h2>
-    <p v-if="showHome">{{ gameDescription2 }}</p>
-    <p v-if="showHome">{{ gameDescription3 }}</p>
-    <button v-if="showHome" @click="chooseBorough" :style="buttonStyle">Begin</button>
-    <p v-if="showBoroughs">{{ chooseBoroughs }}</p>
-    <button v-if="showBoroughs" @click="startBronx" :style="buttonStyle">Bronx</button>
-    <button v-if="showBoroughs" @click="startBrooklyn" :style="buttonStyle">Brooklyn</button>
-    <button v-if="showBoroughs" @click="startManhattan" :style="buttonStyle">Manhattan</button>
-    <button v-if="showBoroughs" @click="startQueens" :style="buttonStyle">Queens</button>
-    <button v-if="showBoroughs" @click="startStatenIsland" :style="buttonStyle">Staten Island</button>
   </div>
 </div>
 </template>
@@ -24,7 +15,6 @@ export default {
     return {
       showHome: true,
       showBoroughs: false,
-      gameTitle: "The Little Apple",
       gameDescription1: "Welcome to the Little Apple, where you can explore the opportunities for urban agriculture within the Big Apple!",
       gameDescription2: "Here, you have the power to help expand New York City's network of community gardens and urban farms by choosing their locations. To support your choices, we are providing you with all the data you need, including land use type, total area, average sunlight, and proximity to highways and areas with high food insecurity.",
       gameDescription3: "Discover what the possibilities are for your community, and how to bring them to life.",
@@ -104,11 +94,11 @@ export default {
   right: 0;
   margin: auto;
   flex-direction: column;
-  align-items: center;
+  align-items: left;
   justify-content: center;
   border-radius: 25px;
   height: 80vh;
-  width: 100vh;
+  width: 60vh;
   background-color: #ffffff;
 }
 

@@ -7,7 +7,7 @@
     <p v-if="showHome">{{ gameDescription3 }}</p>
     <button v-if="showHome" @click="chooseBorough" :style="buttonStyle">Begin</button>
     <p v-if="showBoroughs">{{ chooseBoroughs }}</p>
-    <button v-if="showBoroughs" @click="startBronx" :style="buttonStyle">Bronx</button>
+    <router-link to="/bronx"><button v-if="showBoroughs" @click="startBronx" :style="buttonStyle">Bronx</button></router-link>
     <button v-if="showBoroughs" @click="startBrooklyn" :style="buttonStyle">Brooklyn</button>
     <button v-if="showBoroughs" @click="startManhattan" :style="buttonStyle">Manhattan</button>
     <button v-if="showBoroughs" @click="startQueens" :style="buttonStyle">Queens</button>
