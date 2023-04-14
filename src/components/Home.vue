@@ -1,6 +1,5 @@
 <template>
-<div id="background" :style="bgStyle">
-  <div id="app">
+  <div id="container">
     <img src="@/assets/LittleAppleLogo.png">
     <h2 v-if="showHome">{{ gameDescription1 }}</h2>
     <p v-if="showHome">{{ gameDescription2 }}</p>
@@ -12,7 +11,6 @@
     <button v-if="showBoroughs" @click="startManhattan" :style="buttonStyle">Manhattan</button>
     <button v-if="showBoroughs" @click="startQueens" :style="buttonStyle">Queens</button>
     <button v-if="showBoroughs" @click="startStatenIsland" :style="buttonStyle">Staten Island</button>
-  </div>
 </div>
 </template>
 
@@ -68,18 +66,11 @@ export default {
         'background-position': 'center',
       };
     },
-    bgStyle() {
-      return {
-        'background-image': `url(${this.bgImage})`,
-        'background-size': 'cover',
-        'background-position': 'center',
-      };
-    },
   },
 }
 </script>
 
-<style>
+<style scoped>
 @font-face {
     font-family: roboto;
     src: url('~@/assets/fonts/Roboto-Regular.ttf');
@@ -95,47 +86,37 @@ export default {
     src: url('~@/assets/fonts/Roboto-Condensed.ttf');
 }
 
-#app {
+#container {
   display: flex;
   position: absolute;
-  top:0;
-  bottom: 0;
-  left: 0;
-  right: 0;
   margin: auto;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border-radius: 25px;
+  width: 50vw;
   height: 80vh;
-  width: 100vh;
   background-color: #ffffff;
-}
-
-#background {
-  display: flex;
-  position: absolute;
-  top:0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  border-radius: 1rem;
+  box-shadow: 3px 3px grey;
 }
 
 h1 {
-  font-size: 3rem;
+  font-size: 3vw;
   margin-bottom: 1rem;
   font-family: roboto-mono;
 }
 
 h2 {
-  font-size: 1.5rem;
+  font-size: 1.5vw;
   margin-bottom: 1rem;
   text-align: center;
   font-family: roboto;
+  margin-left: 3.5rem;
+  margin-right: 3.5rem;
 }
 
 p {
-  font-size: 1rem;
+  font-size: 1vw;
   margin-bottom: 1rem;
   text-align: center;
   margin-left: 3.5rem;
@@ -144,14 +125,14 @@ p {
 }
 
 button {
-  padding: 1rem 1.5rem;
-  margin: 0.75rem;
+  padding: 1vw 1.5vw;
+  margin: 0.5vw;
   font-family: roboto;
-  font-size: 1rem;
+  font-size: 1.5vh;
   background-color: #4caf50;
   color: #fff;
   border: none;
-  border-radius: 0.25rem;
+  border-radius: 0.25vw;
   cursor: pointer;
 }
 
@@ -160,6 +141,6 @@ button:hover{
 }
 
 img {
-  width: 75vh;
+  width: 40vw;
 }
 </style>

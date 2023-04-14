@@ -1,10 +1,13 @@
 <template>
-<div id="background" :style="bgStyle">
-  <div id="app">
-    <img src="@/assets/LittleAppleLogo.png">
-    <h2 v-if="showHome">{{ gameDescription1 }}</h2>
+  <div id="container">
+    <div id="controls">
+      <img src="@/assets/LittleAppleLogo.png">
+      <div id="results">
+        <pre><h2>{{ locationInfo }}</h2></pre>
+      </div>
+      <button :style="buttonStyle">Confirm Choices</button>
+    </div>
   </div>
-</div>
 </template>
 
 <script>
@@ -13,42 +16,10 @@ export default {
   name: 'App',
   data() {
     return {
-      showHome: true,
-      showBoroughs: false,
-      gameDescription1: "Welcome to the Little Apple, where you can explore the opportunities for urban agriculture within the Big Apple!",
-      gameDescription2: "Here, you have the power to help expand New York City's network of community gardens and urban farms by choosing their locations. To support your choices, we are providing you with all the data you need, including land use type, total area, average sunlight, and proximity to highways and areas with high food insecurity.",
-      gameDescription3: "Discover what the possibilities are for your community, and how to bring them to life.",
-      chooseBoroughs: "What greater community are you a member of?",
+      locationInfo: "Locations Added: \nOpen Space Lost: \nIndividuals Served: \n(XX% food insecure)",
       buttonImage: require('@/assets/ButtonBG.png'),
       buttonHover: require('@/assets/ButtonHOV.png'),
-      bgImage: require('@/assets/GameGradient.png'),
     };
-  },
-  methods: {
-    chooseBorough() {
-      this.showHome = !this.showHome
-      this.showBoroughs = !this.showBoroughs
-    },
-    startBronx() {
-      // Redirect to the game page or start the game.
-      // This method will be different for every game.
-    },
-    startBrooklyn() {
-      // Redirect to the game page or start the game.
-      // This method will be different for every game.
-    },
-    startManhattan() {
-      // Redirect to the game page or start the game.
-      // This method will be different for every game.
-    },
-    startQueens() {
-      // Redirect to the game page or start the game.
-      // This method will be different for every game.
-    },
-    startStatenIsland() {
-      // Redirect to the game page or start the game.
-      // This method will be different for every game.
-    },
   },
   computed: {
     buttonStyle() {
@@ -58,18 +29,11 @@ export default {
         'background-position': 'center',
       };
     },
-    bgStyle() {
-      return {
-        'background-image': `url(${this.bgImage})`,
-        'background-size': 'cover',
-        'background-position': 'center',
-      };
-    },
   },
 }
 </script>
 
-<style>
+<style scoped>
 @font-face {
     font-family: roboto;
     src: url('~@/assets/fonts/Roboto-Regular.ttf');
@@ -85,30 +49,41 @@ export default {
     src: url('~@/assets/fonts/Roboto-Condensed.ttf');
 }
 
-#app {
+#container {
   display: flex;
   position: absolute;
-  top:0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
+  margin-left: 10px;
   flex-direction: column;
   align-items: left;
-  justify-content: center;
-  border-radius: 25px;
-  height: 80vh;
-  width: 60vh;
-  background-color: #ffffff;
+  justify-content: left;
+  width: 95vw;
+  height: 92vh;
+  background-color: yellow;
+  border-radius: 1rem;
+  box-shadow: 3px 3px grey;
 }
 
-#background {
+#controls {
   display: flex;
   position: absolute;
-  top:0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: left;
+  width: 27vw;
+  height: 92vh;
+  background-color: #ffffff;
+  border-radius: 1rem;
+  box-shadow: 3px 3px grey;
+}
+
+#results{
+  height: 8vw;
+  width: 23vw;
+  margin-top: 2vh;
+  background-color: rgb(210, 239, 210);
+  padding: none;
+  border-radius: 1rem;
+  box-shadow: 3px 3px grey;
 }
 
 h1 {
@@ -118,9 +93,10 @@ h1 {
 }
 
 h2 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  text-align: center;
+  font-size: 1.25vw;
+  font-weight: bold;
+  padding-left: 1vw;
+  text-align: left;
   font-family: roboto;
 }
 
@@ -134,14 +110,14 @@ p {
 }
 
 button {
-  padding: 1rem 1.5rem;
-  margin: 0.75rem;
+  padding: 1vw 1.5vw;
+  margin-top: 1.5vh;
   font-family: roboto;
-  font-size: 1rem;
+  font-size: 1.5vh;
   background-color: #4caf50;
   color: #fff;
   border: none;
-  border-radius: 0.25rem;
+  border-radius: 0.25vw;
   cursor: pointer;
 }
 
@@ -150,6 +126,7 @@ button:hover{
 }
 
 img {
-  width: 75vh;
+  padding-top: 2rem;
+  width: 20vw;
 }
 </style>

@@ -1,18 +1,6 @@
 <template>
-<div id="background" :style="bgStyle">
-  <div id="app">
-    <img src="@/assets/LittleAppleLogo.png">
-    <h2 v-if="showHome">{{ gameDescription1 }}</h2>
-    <p v-if="showHome">{{ gameDescription2 }}</p>
-    <p v-if="showHome">{{ gameDescription3 }}</p>
-    <button v-if="showHome" @click="chooseBorough" :style="buttonStyle">Begin</button>
-    <p v-if="showBoroughs">{{ chooseBoroughs }}</p>
-    <button v-if="showBoroughs" @click="startBronx" :style="buttonStyle">Bronx</button>
-    <button v-if="showBoroughs" @click="startBrooklyn" :style="buttonStyle">Brooklyn</button>
-    <button v-if="showBoroughs" @click="startManhattan" :style="buttonStyle">Manhattan</button>
-    <button v-if="showBoroughs" @click="startQueens" :style="buttonStyle">Queens</button>
-    <button v-if="showBoroughs" @click="startStatenIsland" :style="buttonStyle">Staten Island</button>
-  </div>
+<div id="app" :style="bgStyle">
+  <router-view></router-view>
 </div>
 </template>
 
@@ -22,52 +10,10 @@ export default {
   name: 'App',
   data() {
     return {
-      showHome: true,
-      showBoroughs: false,
-      gameTitle: "The Little Apple",
-      gameDescription1: "Welcome to the Little Apple, where you can explore the opportunities for urban agriculture within the Big Apple!",
-      gameDescription2: "Here, you have the power to help expand New York City's network of community gardens and urban farms by choosing their locations. To support your choices, we are providing you with all the data you need, including land use type, total area, average sunlight, and proximity to highways and areas with high food insecurity.",
-      gameDescription3: "Discover what the possibilities are for your community, and how to bring them to life.",
-      chooseBoroughs: "What greater community are you a member of?",
-      buttonImage: require('@/assets/ButtonBG.png'),
-      buttonHover: require('@/assets/ButtonHOV.png'),
-      bgImage: require('@/assets/GameGradient.png'),
+      bgImage: require('@/assets/GameGradientBG.png'),
     };
   },
-  methods: {
-    chooseBorough() {
-      this.showHome = !this.showHome
-      this.showBoroughs = !this.showBoroughs
-    },
-    startBronx() {
-      // Redirect to the game page or start the game.
-      // This method will be different for every game.
-    },
-    startBrooklyn() {
-      // Redirect to the game page or start the game.
-      // This method will be different for every game.
-    },
-    startManhattan() {
-      // Redirect to the game page or start the game.
-      // This method will be different for every game.
-    },
-    startQueens() {
-      // Redirect to the game page or start the game.
-      // This method will be different for every game.
-    },
-    startStatenIsland() {
-      // Redirect to the game page or start the game.
-      // This method will be different for every game.
-    },
-  },
   computed: {
-    buttonStyle() {
-      return {
-        'background-image': `url(${this.buttonImage})`,
-        'background-size': 'cover',
-        'background-position': 'center',
-      };
-    },
     bgStyle() {
       return {
         'background-image': `url(${this.bgImage})`,
@@ -106,60 +52,5 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border-radius: 25px;
-  height: 80vh;
-  width: 100vh;
-  background-color: #ffffff;
-}
-
-#background {
-  display: flex;
-  position: absolute;
-  top:0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
-
-h1 {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-  font-family: roboto-mono;
-}
-
-h2 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  text-align: center;
-  font-family: roboto;
-}
-
-p {
-  font-size: 1rem;
-  margin-bottom: 1rem;
-  text-align: center;
-  margin-left: 3.5rem;
-  margin-right: 3.5rem;
-  font-family: roboto;
-}
-
-button {
-  padding: 1rem 1.5rem;
-  margin: 0.75rem;
-  font-family: roboto;
-  font-size: 1rem;
-  background-color: #4caf50;
-  color: #fff;
-  border: none;
-  border-radius: 0.25rem;
-  cursor: pointer;
-}
-
-button:hover{
-  background-color: transparent;
-}
-
-img {
-  width: 75vh;
 }
 </style>
