@@ -11,7 +11,7 @@ Vue.use(Router)
 const router = new Router({
   routes: [
     { path: '/', component: Home },
-    { path: '/bronx', component: Bronx }
+    { path: '/bronx/', component: Bronx }
   ]
 })
 

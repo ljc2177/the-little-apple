@@ -6,11 +6,11 @@
     <p v-if="showHome">{{ gameDescription3 }}</p>
     <button v-if="showHome" @click="chooseBorough" :style="buttonStyle">Begin</button>
     <p v-if="showBoroughs">{{ chooseBoroughs }}</p>
-    <router-link to="/bronx"><button v-if="showBoroughs" @click="startBronx" :style="buttonStyle">Bronx</button></router-link>
-    <button v-if="showBoroughs" @click="startBrooklyn" :style="buttonStyle">Brooklyn</button>
-    <button v-if="showBoroughs" @click="startManhattan" :style="buttonStyle">Manhattan</button>
-    <button v-if="showBoroughs" @click="startQueens" :style="buttonStyle">Queens</button>
-    <button v-if="showBoroughs" @click="startStatenIsland" :style="buttonStyle">Staten Island</button>
+    <router-link to="/bronx/"><button v-if="showBoroughs" :style="buttonStyle">Bronx</button></router-link>
+    <button v-if="showBoroughs" :style="buttonStyle">Brooklyn</button>
+    <button v-if="showBoroughs" :style="buttonStyle">Manhattan</button>
+    <button v-if="showBoroughs" :style="buttonStyle">Queens</button>
+    <button v-if="showBoroughs" :style="buttonStyle">Staten Island</button>
 </div>
 </template>
 
@@ -36,26 +36,6 @@ export default {
     chooseBorough() {
       this.showHome = !this.showHome
       this.showBoroughs = !this.showBoroughs
-    },
-    startBronx() {
-      // Redirect to the game page or start the game.
-      // This method will be different for every game.
-    },
-    startBrooklyn() {
-      // Redirect to the game page or start the game.
-      // This method will be different for every game.
-    },
-    startManhattan() {
-      // Redirect to the game page or start the game.
-      // This method will be different for every game.
-    },
-    startQueens() {
-      // Redirect to the game page or start the game.
-      // This method will be different for every game.
-    },
-    startStatenIsland() {
-      // Redirect to the game page or start the game.
-      // This method will be different for every game.
     },
   },
   computed: {
