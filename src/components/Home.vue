@@ -24,7 +24,7 @@ export default {
       showBoroughs: false,
       gameTitle: "The Little Apple",
       gameDescription1: "Welcome to the Little Apple, where you can explore the opportunities for urban agriculture within the Big Apple!",
-      gameDescription2: "Here, you have the power to help expand New York City's network of community gardens and urban farms by choosing their locations. To support your choices, we are providing you with all the data you need, including land use type, total area, average sunlight, and proximity to highways and areas with high food insecurity.",
+      gameDescription2: "One of the biggest setbacks to urban agriculture is land availability. Here, you have the power to help expand New York City's network of community gardens and urban farms by choosing their locations. To support your choices, we are providing you with all the data you need, including land use type, total area, average sunlight, and proximity to highways and areas with high food insecurity.",
       gameDescription3: "Discover what the possibilities are for your community, and how to bring them to life.",
       chooseBoroughs: "What greater community are you a member of?",
       buttonImage: require('@/assets/ButtonBG.png'),

@@ -1,5 +1,5 @@
 <template>
-  <div id="container">
+  <div id="container" @mouseup="showPopup()">
     <div id="highlighted-div" v-if="showTour"></div>
       <div id="tour" ref="tour" v-if="showTour">
         <div v-for="(message, index) in messages" :key="index" v-show="currentMessage === index">
@@ -7,6 +7,12 @@
           <h5>{{ message.content }}</h5>
           <button v-if="currentMessage < messages.length - 1" @click="next">Next</button>
           <button v-else @click="showTour = !showTour">Get Started</button>
+        </div>
+      </div>  
+      <div id="insights" ref="insights" v-if="showInsights">
+        <span class="close-btn" @click="showInsights = false; currentQuote = Math.floor(Math.random()*19)">&times;</span>
+        <div v-for="(quote, index) in quotes" :key="index" v-show="currentQuote === index">
+          <p style="text-align:left; font-size: 1.75vh; padding-left: 0px; padding-right: 0px;">{{ quote.content }}</p>
         </div>
       </div>  
       <div id="highlighted-div" v-if="showConfirm"></div>
@@ -17,12 +23,12 @@
         <h2 id="data2">{{ featureCount }}<br>{{ openSpaceLost }}%<br>{{ totalIndSrv }}<br>({{ foodInsSrv }}% food insecure)<img src="@/assets/tooltip.png" title="Food insecurity data was retrieved from Feeding America and assessed by census block utilizing 2020 census data. Calculated using the distance of each lot to areas of food insecurity." style="height:1.5vh; width:1.5vh; padding-top:0vh; padding-bottom:0px;"></h2>
         <p style="padding-bottom:2vh; margin-top:0vh;">Below, you can export your locations as a CSV, start over, or return to your progress.</p>
         <div id="buttons">
-          <button style="margin-left: 2vw; margin-right: 2vw;">Export CSV</button>
+          <button :class="{'active': isDownloadCSVSelected}" @click="isDownloadCSVSelected = !isDownloadCSVSelected" style="margin-left: 2vw; margin-right: 2vw;">Export CSV</button>
           <router-link to="/"><button style="margin-left: 2vw; margin-right: 2vw;">Start Over</button></router-link>
           <button @click="confirmChoices" style="margin-left: 2vw; margin-right: 2vw;">Return</button>
         </div>
       </div>
-    <div id="map" ref="map">
+    <div id="map">
     </div>
     <div id="controls" ref="controls">
       <router-link to="/"><img src="@/assets/LittleAppleLogo.png"></router-link>
@@ -57,6 +63,7 @@ import Mapbox from "mapbox-gl";
 import mapboxgl from 'mapbox-gl';
 import VueSlider from 'vue-slider-component';
 import 'vue-slider-component/theme/default.css';
+import Papa from 'papaparse';
 
 export default {
   name: 'App',
@@ -69,7 +76,7 @@ export default {
         },
         {
           title: 'Here is your interactive map of the Bronx',
-          content: 'This is where you will see which potential locations fit within your parameters.'
+          content: 'This is where you will see which potential locations fit within your parameters. To filter your locations to a specific area, simply zoom in.'
         },
         {
           title: 'This is the control panel',
@@ -96,7 +103,67 @@ export default {
           content: 'We hope that the Little Apple can help you empower your community through food.'
         },
       ],
+      quotes: [
+        {
+          content: "In the Portland, ME urban agriculture program, the most important factors when evaluating a new potential site are: Air pollution - Even though they have built on contaminated soil by performing remediation, it's a general rule of thumb that locations farther from highways will be prioritized due to air pollution. 2. Food insecurity/low or mixed income neighborhood - Through the city's Black development grants, individuals from food insecure, low, and mixed income neighborhoods are encouraged to bring urban agriculture into their communities. 3. Size - garden plots are 10 x 15 ft with one or two individuals per plot. The more space, the more individuals that a single location can serve.",
+        },
+        {
+          content: 'In the Washington, D.C. urban agriculture program, the most important factors when evaluating a new potential site are water access and light access. As of today, there are currently 214 urban agriculture locations throughout the D.C. metro area.',
+        },
+        {
+          content: 'In Portland, ME, all developed urban agriculture receive a fence, access to a communal shed with tools, a composting area, and a functioning water system which is managed seasonally by the overseeing staff.',
+        },
+        {
+          content: 'The waitlist for plots within the Portland, ME urban agriculture system is currently 800 individuals long. To promote equity, individuals who demonstrate the most need are moved to the top of the list.',
+        },
+        {
+          content: 'In Portland, ME, urban agriculture locations are currently only being placed within parks. They have come to find that much of the time, the most ideal locations are located directly next to athletic and recreational facilities.',
+        },
+        {
+          content: "You might think that a single plot is not a large enough area to measurably impact someone's access to food, but you can grow more than you think within a 10' x 15' plot. With the help of succession planting customized to your climate data, you can grow up to 100lbs of fresh food a year.",
+        },
+        {
+          content: 'There are two major systems for urban agriculture: community gardens and urban farms. In Portland, ME the focus is primarily on community gardens, while in Washington, D.C the focus is primarily on urban farms. The biggest factors that contribute to whether a location will be better as a community garden or an urban farm are labor (community engagement vs. employment structure), size (urban farms require more land than community gardens), and community preferences (many communities are not open to having outside entities establish urban farms within their limits).',
+        },
+        {
+          content: 'In Portland, ME, individuals participating in the urban agriculture program are encouraged to donate a portion of their crops to local food banks. Every location has a cooler on-site where nonprofits can pick up the donated food for their missions.',
+        },
+        {
+          content: 'One model that has been explored in Portland, ME is a common share model: instead of individual plots, the food is all grown together and the labor/responsibilities is divided among the participating individuals. This has been a particularly good model for people who are new to growing food who want to learn more, or who are new to the area who want to meet more people and grow their sense of community.',
+        },
+        {
+          content: 'In Portland, ME, participating individuals pay for a whole or half garden plot through a yearly fee. If you are unable to afford that, they also have a scholarship and sliding scale. If you are fortuate enough to be able to afford more, you are encouraged to pay more to help subsidize the low income programs. All participants are required to volunteer 6 hrs/season to help maintain garden. This includes flipping the compost, organizing the toolshed, and assisting other gardeners.',
+        },
+        {
+          content: "In Portland, ME, every year a survey is distributed to participants to assess the success of the urban agriculture program. Questions include how much food they were able to grow and how that affected their family's access to food. Overwhelmingly, they have come to find that individuals record that it does allow them and their families to include more vegetables in their diet at a reduced rate.",
+        },
+        {
+          content: 'In Washington, D.C. urban farms function through regular lease structures. "Tenants" are typically respondible for the utilities of their urban farm, however in some cases park land might have water fee subsidies.',
+        },
+        {
+          content: 'Urban farms, by their very nature, require more work on the part of the applicant. This is because of the scale and independent oversight that comes with urban farming. That said, that autonomy also allows urban farms to independently define and support their mission.',
+        },
+        {
+          content: "In Washington, D.C., the majority of urban farms are located on district-owned park land. Because for-profit corporations can't profit on government owned land, they are also majority nonprofit organizations.",
+        },
+        {
+          content: "One of the greatest strengths of Washington, D.C.'s urban agriculture program is its corresponding network of urban agriculture professionals. Many of the urban farmers have been working in the space for over 10 years.",
+        },
+        {
+          content: 'In 2020, the Washington, D.C. urban agriculture department was created to help build resources for urban farms and agriculture. Some of their programs include: an annual grant program, a tax abatement program, the Land Lease Program, and a yearly urban agriculture conference. All of these programs support the overall goal of supporting a diversity of urban farms within Washington, D.C..',
+        },
+        {
+          content: "One key component of making urban agriculture equitable is differentiating locations between those that are being established as part of a trend and those that are being established to address a need. The best way to do this is to utilize community-centric planning when implementing potential locations and programs."
+        },
+        {
+          content: "For the best results, plants need from 6-8 hours of direct sunlight to thrive. If you get less than this, you can still find success with herbs, but other plants will experience significantly lower yields."
+        },
+        {
+          content: "The beginning of the growing season is in early Spring each year. If you are looking to plant from seed, you should be planting between March and April. If you are growing your produce from transplants, you should plant in May. Of course, this differs for late-season plants, and it's best to refer to your agricultural climate map."
+        }
+      ],
       currentMessage: 0,
+      currentQuote: 0,
       buttonImage: require('@/assets/ButtonBG.png'),
       buttonHover: require('@/assets/ButtonHOV.png'),
       accessToken: "pk.eyJ1IjoibGpjMjE3NyIsImEiOiJjbDRvemp0azEwMTd3M2NwOTl2bGk5M3YxIn0.Nyn7KWoueXzgl1mYurECiw",
@@ -116,6 +183,8 @@ export default {
       isUnlicensedParkingLotsSelected: false,
       showTour: false,
       showConfirm: false,
+      showInsights: false,
+      isDownloadCSVSelected: false,
     };
   },
   components: {
@@ -170,7 +239,7 @@ export default {
         divCont.style.zIndex = 900;
         const divMap = this.$refs.map;
         divMap.style.zIndex = 900;
-      };
+      }
     },
   clearFilters() {
       this.area= [0,1706];
@@ -184,6 +253,12 @@ export default {
     },
     confirmChoices() {
     this.showConfirm = !this.showConfirm
+    },
+    showPopup() {
+      const randNum = Math.floor(Math.random()*10)
+      if (randNum%4 === 0){
+        return this.showInsights=true
+      }
     },
   },
   mounted() {
@@ -237,7 +312,7 @@ export default {
       const visibleFeatures = map.queryRenderedFeatures({
         layers: filterLayers,
         filter: map.getFilter(filterLayers),
-      });filterExpression
+      });
 
       const totalSpaceLost = visibleFeatures.reduce((acc, feature) => {
         return (acc + feature.properties['%SpaceLost']);
@@ -252,7 +327,7 @@ export default {
       }, 0);
       
       this.featureCount = visibleFeatures.length;
-      this.openSpaceLost = Math.floor(100*totalSpaceLost);
+      this.openSpaceLost = Math.floor(totalSpaceLost*100);
       this.totalIndSrv = totalIndSrv;
       this.foodInsSrv = Math.floor((foodIndSrv/totalIndSrv)*100);
     };
@@ -293,6 +368,30 @@ export default {
     this.$watch('isUnlicensedParkingLotsSelected', () => {
       updateFilter();
     });
+
+    const downloadCSV = () => {
+      const features = map.queryRenderedFeatures({
+        layers: ['bronx-5i80z3']
+      });
+      const fields = ['Borough', 'Block', 'Lot', 'CD', 'ZipCode', 'Address', 'OwnerName', 'HistDist', 'Acres', 'Gov_Iden', 'layer', 'SqFt', 'Sun_Hours', '%SpaceLost', 'IndSrv', 'FloodZone', 'Distance_H', 'Distance_P', 'Distance_T', 'Distance_F', 'ZoningDist', 'FoodInsSrv', '%FoodIns'];
+      const csv = Papa.unparse({
+        fields: fields,
+        data: features.map(feature => feature.properties)
+      });
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'BronxUrbanAgLocations.csv';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+
+    this.$watch('isDownloadCSVSelected', () => {
+      downloadCSV();
+      this.isDownloadCSVSelected = !this.isDownloadCSVSelected;
+    })
   },
   computed: {
     buttonStyle() {
@@ -400,6 +499,33 @@ export default {
   justify-content: center;
   bottom: 0;
   margin-left: 5vw;
+}
+
+#insights{
+  z-index: 21100;
+  position: absolute;
+  color: black;
+  width: 25vw;
+  height: 22vh;
+  background-color: rgb(239, 255, 239);
+  box-shadow: 3px 3px grey;
+  border-radius: 1rem;
+  text-align: center;
+  overflow-y:auto;
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+  justify-content: center;
+  bottom: 2vh;
+  right: 2vw;
+}
+
+.close-btn {
+        position: absolute;
+        color: #000000;
+        top: 0vh;
+        left: 90%;
+        padding: 10px;
+        cursor: pointer;
 }
 
 #map {
