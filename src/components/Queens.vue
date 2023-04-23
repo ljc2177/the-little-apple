@@ -416,12 +416,12 @@ export default {
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
-      this.isDownloadCSVSelected = false;
     }
 
-    this.$watch('isDownloadCSVSelected', (newValue) => {
-      if (newValue === true) {
+    this.$watch('isDownloadCSVSelected', () => {
+      if (this.isDownloadCSVSelected === true) {
         downloadCSV();
+        this.isDownloadCSVSelected = false;
       }
     });
   },
