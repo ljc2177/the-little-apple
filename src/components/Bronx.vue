@@ -23,7 +23,7 @@
         <h2 id="data2">{{ featureCount }}<br>{{ openSpaceLost }}%<br>{{ totalIndSrv }}<br>({{ foodInsSrv }}% food insecure)<img src="@/assets/tooltip.png" title="Food insecurity data was retrieved from Feeding America and assessed by census block utilizing 2020 census data. Calculated using the distance of each lot to areas of food insecurity." style="height:1.5vh; width:1.5vh; padding-top:0vh; padding-bottom:0px;"></h2>
         <p style="padding-bottom:2vh; margin-top:0vh;">Below, you can export your locations as a CSV, start over, or return to your progress.</p>
         <div id="buttons">
-          <button :class="{'active': isDownloadCSVSelected}" @click="isDownloadCSVSelected = !isDownloadCSVSelected" style="margin-left: 2vw; margin-right: 2vw;">Export CSV</button>
+          <button :class="{'active': isDownloadCSVSelected}" style="margin-left: 2vw; margin-right: 2vw;">Export CSV</button>
           <router-link to="/"><button style="margin-left: 2vw; margin-right: 2vw;">Start Over</button></router-link>
           <button @click="confirmChoices" style="margin-left: 2vw; margin-right: 2vw;">Return</button>
         </div>
@@ -413,11 +413,13 @@ export default {
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
+      this.isDownloadCSVSelected = false;
     }
 
-    this.$watch('isDownloadCSVSelected', () => {
+    this.$watch('isDownloadCSVSelected', (newValue) => {
+      if (newValue === true) {
       downloadCSV();
-      this.isDownloadCSVSelected = !this.isDownloadCSVSelected;
+      }
     })
   },
   computed: {
