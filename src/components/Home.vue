@@ -4,13 +4,13 @@
     <h2 v-if="showHome">{{ gameDescription1 }}</h2>
     <p v-if="showHome">{{ gameDescription2 }}</p>
     <p v-if="showHome">{{ gameDescription3 }}</p>
-    <button v-if="showHome" @click="chooseBorough" :style="buttonStyle">Begin</button>
+    <button v-if="showHome" @click="chooseBorough">BEGIN</button>
     <p v-if="showBoroughs">{{ chooseBoroughs }}</p>
-    <router-link to="/bronx/"><button v-if="showBoroughs" :style="buttonStyle">Bronx</button></router-link>
-    <button v-if="showBoroughs" :style="buttonStyle">Brooklyn</button>
-    <button v-if="showBoroughs" :style="buttonStyle">Manhattan</button>
-    <button v-if="showBoroughs" :style="buttonStyle">Queens</button>
-    <button v-if="showBoroughs" :style="buttonStyle">Staten Island</button>
+    <router-link to="/bronx/"><button v-if="showBoroughs">Bronx</button></router-link>
+    <router-link to="/brooklyn/"><button v-if="showBoroughs">Brooklyn</button></router-link>
+    <router-link to="/manhattan/"><button v-if="showBoroughs">Manhattan</button></router-link>
+    <router-link to="/queens/"><button v-if="showBoroughs">Queens</button></router-link>
+    <router-link to="/statenisland/"><button v-if="showBoroughs">Staten Island</button></router-link>
 </div>
 </template>
 
@@ -38,15 +38,6 @@ export default {
       this.showBoroughs = !this.showBoroughs
     },
   },
-  computed: {
-    buttonStyle() {
-      return {
-        'background-image': `url(${this.buttonImage})`,
-        'background-size': 'cover',
-        'background-position': 'center',
-      };
-    },
-  },
 }
 </script>
 
@@ -72,11 +63,13 @@ export default {
   margin: auto;
   flex-direction: column;
   align-items: center;
+  color: black;
   justify-content: center;
   width: 50vw;
   height: 80vh;
-  background-color: #ffffff;
+  background-color: white;
   border-radius: 1rem;
+  border: 2px solid black;
   box-shadow: 3px 3px grey;
 }
 
@@ -87,10 +80,10 @@ h1 {
 }
 
 h2 {
-  font-size: 1.5vw;
+  font-size: 1.25vw;
   margin-bottom: 1rem;
   text-align: center;
-  font-family: roboto;
+  font-family: roboto-mono;
   margin-left: 3.5rem;
   margin-right: 3.5rem;
 }
@@ -101,23 +94,26 @@ p {
   text-align: center;
   margin-left: 3.5rem;
   margin-right: 3.5rem;
-  font-family: roboto;
+  font-family: roboto-mono;
 }
 
 button {
   padding: 1vw 1.5vw;
   margin: 0.5vw;
-  font-family: roboto;
-  font-size: 1.5vh;
-  background-color: #4caf50;
-  color: #fff;
-  border: none;
-  border-radius: 0.25vw;
+  font-family: roboto-condensed;
+  font-size: 2vh;
+  font-weight: bold;
+  background-color: white;
+  color: #000000;
+  border: 2px solid black;
+  box-shadow: 3px 3px grey;
+  border-radius: 0.5vw;
   cursor: pointer;
 }
 
 button:hover{
-  background-color: transparent;
+  background-color: lightgrey;
+  box-shadow: 3px 3px black;
 }
 
 img {

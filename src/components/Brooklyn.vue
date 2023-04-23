@@ -44,15 +44,15 @@
         <button ref="upl" :class="{'active': isUnlicensedParkingLotsSelected}" @click="isUnlicensedParkingLotsSelected = !isUnlicensedParkingLotsSelected" :style="buttonStyle2">Unlicensed Parking Lots</button>
       </div>
       <h3>Total Area</h3>
-      <vue-slider v-bind="options" ref="slider" v-model="area" :min="0" :max="1706" :tooltip-formatter="'{value} acre(s)'" :clickable="false" :enable-cross="false" :range="true" :style="sliderStyle" :railStyle="dotStyle" :processStyle="railStyle" :tooltipStyle="railStyle"></vue-slider>
+      <vue-slider v-bind="options" ref="slider" v-model="area" :min="0" :max="774" :tooltip-formatter="'{value} acre(s)'" :clickable="false" :enable-cross="false" :range="true" :style="sliderStyle" :railStyle="dotStyle" :processStyle="railStyle" :tooltipStyle="railStyle"></vue-slider>
       <h3>Daily Sunlight<img src="@/assets/tooltip.png" title="Daily sunlight was calculated utilizing sunlight analysis on 3d models of the city through Grasshopper and Rhino. The analysis was performed for the dates at the beginning of growing season in mid-April to best estimate total sunlight for the entire growing season through Fall." style="height:1.5vh; width:1.5vh; padding-top:0px;"></h3>
       <vue-slider v-bind="options" v-model="sunlight" :min="2" :max="16" :range="true" :tooltip-formatter="'{value} hours'" :clickable="false" :enable-cross="false" :style="sliderStyle" :railStyle="dotStyle" :processStyle="railStyle" :tooltipStyle="railStyle"></vue-slider>
       <h3>Proximity to Highways</h3>
-      <vue-slider v-bind="options" v-model="highways" :min="0" :max="2.3" :interval="0.1" :range="true" :tooltip-formatter="'{value} mile(s)'" :clickable="false" :enable-cross="false" :style="sliderStyle" :railStyle="dotStyle" :processStyle="railStyle" :tooltipStyle="railStyle"></vue-slider>
+      <vue-slider v-bind="options" v-model="highways" :min="0" :max="3.2" :interval="0.1" :range="true" :tooltip-formatter="'{value} mile(s)'" :clickable="false" :enable-cross="false" :style="sliderStyle" :railStyle="dotStyle" :processStyle="railStyle" :tooltipStyle="railStyle"></vue-slider>
       <h3>Proximity to Food Insecurity<img src="@/assets/tooltip.png" title="Food insecurity data was retrieved from Feeding America and assessed by census block utilizing 2020 census data." style="height:1.5vh; width:1.5vh; padding-top:0px;"></h3>
-      <vue-slider v-bind="options" v-model="foodins" :min="0" :max="3.8" :interval="0.1" :range="true" :tooltip-formatter="'{value} mile(s)'" :clickable="false" :enable-cross="false" :style="sliderStyle" :railStyle="dotStyle" :processStyle="railStyle" :tooltipStyle="railStyle"></vue-slider>
+      <vue-slider v-bind="options" v-model="foodins" :min="0" :max="8.4" :interval="0.1" :range="true" :tooltip-formatter="'{value} mile(s)'" :clickable="false" :enable-cross="false" :style="sliderStyle" :railStyle="dotStyle" :processStyle="railStyle" :tooltipStyle="railStyle"></vue-slider>
       <h3>Proximity to Low Income Households<img src="@/assets/tooltip.png" title="Low income households were defined by the 2020 census and corresponding poverty thresholds." style="height:1.5vh; width:1.5vh; padding-top:0px;"></h3>
-      <vue-slider v-bind="options" v-model="lowinc" :min="0" :max="3.2" :interval="0.1" :range="true" :tooltip-formatter="'{value} mile(s)'" :clickable="false" :enable-cross="false" :style="sliderStyle" :railStyle="dotStyle" :processStyle="railStyle" :tooltipStyle="railStyle"></vue-slider>
+      <vue-slider v-bind="options" v-model="lowinc" :min="0" :max="8.4" :interval="0.1" :range="true" :tooltip-formatter="'{value} mile(s)'" :clickable="false" :enable-cross="false" :style="sliderStyle" :railStyle="dotStyle" :processStyle="railStyle" :tooltipStyle="railStyle"></vue-slider>
       <br><button ref="clear" :style="buttonStyle2" @click="clearFilters()">Clear All Filters</button>
     </div>
   </div>
@@ -60,7 +60,6 @@
 
 <script>
 import mapboxgl from "mapbox-gl";
-import Mapbox from "mapbox-gl";
 import VueSlider from 'vue-slider-component';
 import 'vue-slider-component/theme/default.css';
 import Papa from 'papaparse';
@@ -75,7 +74,7 @@ export default {
           content: 'Here are some tools to get started.'
         },
         {
-          title: 'Here is your interactive map of the Bronx',
+          title: 'Here is your interactive map of Brooklyn',
           content: 'This is where you will see which potential locations fit within your parameters. To filter your locations to a specific area, simply zoom in.'
         },
         {
@@ -169,15 +168,15 @@ export default {
       accessToken: "pk.eyJ1IjoibGpjMjE3NyIsImEiOiJjbDRvemp0azEwMTd3M2NwOTl2bGk5M3YxIn0.Nyn7KWoueXzgl1mYurECiw",
       mapStyle: "mapbox://styles/ljc2177/clgi4m0yl010s01pps25n40is",
       map: '#map',
-      area: [0,1706],
+      area: [0,774],
       sunlight: [2,16],
-      highways: [0,2.3],
-      foodins: [0,3.8],
-      lowinc: [0,3.2],
-      featureCount: 1457,
+      highways: [0,3.2],
+      foodins: [0,8.4],
+      lowinc: [0,8.4],
+      featureCount: 1413,
       openSpaceLost: 100,
-      totalIndSrv: 3987410,
-      foodInsSrv: 39,
+      totalIndSrv: 3327500,
+      foodInsSrv: 17,
       isOpenSpacesSelected: false,
       isVacantLotsSelected: false,
       isUnlicensedParkingLotsSelected: false,
@@ -263,11 +262,11 @@ export default {
       }
     },
   clearFilters() {
-      this.area= [0,1706];
+      this.area= [0,774];
       this.sunlight= [2,16];
-      this.highways= [0,2.3];
-      this.foodins= [0,3.8];
-      this.lowinc= [0,3.2];
+      this.highways= [0,3.2];
+      this.foodins= [0,8.4];
+      this.lowinc= [0,8.4];
       this.isOpenSpacesSelected= false;
       this.isVacantLotsSelected= false;
       this.isUnlicensedParkingLotsSelected= false;
@@ -287,16 +286,16 @@ export default {
 
     const map = new mapboxgl.Map({
       container: 'map',
-      style: 'mapbox://styles/ljc2177/clgi4m0yl010s01pps25n40is',
-      minZoom: 11.5,
-      center: [-73.905269, 40.848322],
+      style: 'mapbox://styles/ljc2177/clgt02h5p003w01qmgvtr7ox2',
+      minZoom: 11,
+      center: [-73.994767, 40.654112],
       maxBounds: [
-        [-74.097,40.759], // Southwest coordinates
-        [-73.712,40.935] // Northeast coordinates
+        [-74.238,40.495], // Southwest coordinates
+        [-73.699,40.856] // Northeast coordinates
       ],
     })
 
-    const filterLayers = ['bronx-5i80z3'];
+    const filterLayers = ['brooklyn-aw5u6h'];
 
     const filterData = {
       'Acres': this.area,
@@ -403,7 +402,7 @@ export default {
 
     const downloadCSV = () => {
       const features = map.queryRenderedFeatures({
-        layers: ['bronx-5i80z3']
+        layers: ['brooklyn-aw5u6h']
       });
       const fields = ['Borough', 'Block', 'Lot', 'CD', 'ZipCode', 'Address', 'OwnerName', 'HistDist', 'Acres', 'Gov_Iden', 'layer', 'SqFt', 'Sun_Hours', '%SpaceLost', 'IndSrv', 'FloodZone', 'Distance_H', 'Distance_P', 'Distance_T', 'Distance_F', 'ZoningDist', 'FoodInsSrv', '%FoodIns'];
       const csv = Papa.unparse({
@@ -414,7 +413,7 @@ export default {
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'BronxUrbanAgLocations.csv';
+      a.download = 'BrooklynUrbanAgLocations.csv';
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);

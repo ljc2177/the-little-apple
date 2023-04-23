@@ -10,7 +10,7 @@ export default {
   name: 'App',
   data() {
     return {
-      bgImage: require('@/assets/GameGradientBG.png'),
+      bgImage: require('@/assets/CityGardenBG.png'),
     };
   },
   computed: {
@@ -49,6 +49,7 @@ export default {
   left: 0;
   right: 0;
   margin: auto;
+  background-color: #add8e6;
   flex-direction: column;
   align-items: center;
   justify-content: center;
