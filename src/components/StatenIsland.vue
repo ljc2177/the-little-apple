@@ -461,7 +461,6 @@ export default {
         'font-family': 'roboto-condensed',
         'color': 'black',
         'border-top-color': '#89f0c3',
-        'color': 'black',
       };
     },
   },

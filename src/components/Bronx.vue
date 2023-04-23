@@ -416,14 +416,11 @@ export default {
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
-      this.isDownloadCSVSelected = false;
-      this.isDownloadCSVSelected = false;
     }
 
-    this.$watch('isDownloadCSVSelected', (newValue) => {
-      if (newValue === true) {
+    this.$watch('isDownloadCSVSelected', () => {
         downloadCSV();
-      }
+        this.isDownloadCSVSelected = !this.isDownloadCSVSelected;
     });
   },
   computed: {
@@ -462,7 +459,6 @@ export default {
         'font-family': 'roboto-condensed',
         'color': 'black',
         'border-top-color': '#89f0c3',
-        'color': 'black',
       };
     },
   },
