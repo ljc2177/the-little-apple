@@ -60,6 +60,7 @@
 
 <script>
 import mapboxgl from "mapbox-gl";
+import Mapbox from "mapbox-gl";
 import VueSlider from 'vue-slider-component';
 import 'vue-slider-component/theme/default.css';
 import Papa from 'papaparse';
@@ -69,9 +70,9 @@ export default {
   data() {
     return {
       messages: [
-        {
+      {
           title: 'Welcome to the Little Apple!',
-          content: 'Here are some tools to get started.'
+          content: 'Here are some tools to get you started.'
         },
         {
           title: 'Here is your interactive map of Manhattan',
@@ -87,15 +88,15 @@ export default {
         },
         {
           title: 'Here is the results panel',
-          content: 'As you define your parameters, this panel will update with the metrics of your chosen locations.'
+          content: 'As you define your parameters, this panel will update with the metrics of your filtered locations.'
         },
         {
           title: 'Again, keep an eye on the map!',
-          content: 'The map will also update with locations that you can hover over to see more information as you explore.'
+          content: 'The map will update which locations are shown as you adjust your metrics.'
         },
         {
-          title: 'Finally when you are done, click Confirm Choices',
-          content: 'This will give you the opportunity to export your selected locations, including their metrics, as a csv file. Here, you will also have the opportunity to start again from the beginning!'
+          title: 'Finally when you are done, click "Confirm Choices"',
+          content: 'You will then have the opportunity to export your filtered locations, including their metrics, as a csv file. You will also have the opportunity to return and explore the possibilities within another borough.'
         },
         {
           title: "Now you're all set!",
@@ -104,52 +105,52 @@ export default {
       ],
       quotes: [
         {
-          content: "In the Portland, ME urban agriculture program, the most important factors when evaluating a new potential site are: Air pollution - Even though they have built on contaminated soil by performing remediation, it's a general rule of thumb that locations farther from highways will be prioritized due to air pollution. 2. Food insecurity/low or mixed income neighborhood - Through the city's Black development grants, individuals from food insecure, low, and mixed income neighborhoods are encouraged to bring urban agriculture into their communities. 3. Size - garden plots are 10 x 15 ft with one or two individuals per plot. The more space, the more individuals that a single location can serve.",
+          content: "In the Portland, Maine urban agriculture program, the most important factors when evaluating a new potential site are: (1) Air pollution - even though new locations have built on contaminated soil in the past with the help of remediation, it's a general rule of thumb that locations farther from highways will be prioritized to help mitigate potential pollution of the site. (2) Food insecurity/low or mixed income neighborhoods - through the city's Black development grants, individuals from food insecure, and low and mixed income neighborhoods are encouraged to bring urban agriculture into their communities. (3) Size - community garden plots are 10 x 15 ft with one or two individuals per plot. The more space, the more individuals that a single location can serve.",
         },
         {
           content: 'In the Washington, D.C. urban agriculture program, the most important factors when evaluating a new potential site are water access and light access. As of today, there are currently 214 urban agriculture locations throughout the D.C. metro area.',
         },
         {
-          content: 'In Portland, ME, all developed urban agriculture receive a fence, access to a communal shed with tools, a composting area, and a functioning water system which is managed seasonally by the overseeing staff.',
+          content: 'In Portland, Maine, all developed urban agriculture locations receive a fence, access to a communal shed with tools, a composting area, and a functioning water system which is managed seasonally by the overseeing staff.',
         },
         {
-          content: 'The waitlist for plots within the Portland, ME urban agriculture system is currently 800 individuals long. To promote equity, individuals who demonstrate the most need are moved to the top of the list.',
+          content: 'The waitlist for plots within the Portland, Maine urban agriculture system is currently 800 individuals long. To promote equity, individuals who demonstrate the most need are moved to the top of the list.',
         },
         {
-          content: 'In Portland, ME, urban agriculture locations are currently only being placed within parks. They have come to find that much of the time, the most ideal locations are located directly next to athletic and recreational facilities.',
+          content: 'In Portland, Maine, urban agriculture locations are currently only being placed within parks. They have come to find that much of the time, the most ideal locations are located directly next to athletic and recreational facilities.',
         },
         {
-          content: "You might think that a single plot is not a large enough area to measurably impact someone's access to food, but you can grow more than you think within a 10' x 15' plot. With the help of succession planting customized to your climate data, you can grow up to 100lbs of fresh food a year.",
+          content: "You might think that a single plot is not a large enough area to measurably impact someone's access to food, but you can grow more than you think within 10' x 15'. With the help of succession planting customized to your region's climate data, you can grow up to 100lbs of fresh food a year in half of a plot.",
         },
         {
-          content: 'There are two major systems for urban agriculture: community gardens and urban farms. In Portland, ME the focus is primarily on community gardens, while in Washington, D.C the focus is primarily on urban farms. The biggest factors that contribute to whether a location will be better as a community garden or an urban farm are labor (community engagement vs. employment structure), size (urban farms require more land than community gardens), and community preferences (many communities are not open to having outside entities establish urban farms within their limits).',
+          content: 'There are two major systems for urban agriculture: community gardens and urban farms. In Portland, Maine the focus is primarily on community gardens, while in Washington, D.C the focus is primarily on urban farms. The biggest factors that contribute to whether a location will be better as a community garden or an urban farm are labor (community engagement vs. employment structure), size (urban farms require more land than community gardens), and community preferences (many communities are not open to having outside entities establish urban farms within their limits).',
         },
         {
-          content: 'In Portland, ME, individuals participating in the urban agriculture program are encouraged to donate a portion of their crops to local food banks. Every location has a cooler on-site where nonprofits can pick up the donated food for their missions.',
+          content: 'In Portland, Maine, individuals participating in the urban agriculture program are encouraged to donate a portion of their crops to local food banks. Every location has a cooler on-site where nonprofits can pick up the donated food for their missions.',
         },
         {
           content: 'One model that has been explored in Portland, ME is a common share model: instead of individual plots, the food is all grown together and the labor/responsibilities is divided among the participating individuals. This has been a particularly good model for people who are new to growing food who want to learn more, or who are new to the area who want to meet more people and grow their sense of community.',
         },
         {
-          content: 'In Portland, ME, participating individuals pay for a whole or half garden plot through a yearly fee. If you are unable to afford that, they also have a scholarship and sliding scale. If you are fortuate enough to be able to afford more, you are encouraged to pay more to help subsidize the low income programs. All participants are required to volunteer 6 hrs/season to help maintain garden. This includes flipping the compost, organizing the toolshed, and assisting other gardeners.',
+          content: 'In Portland, Maine, participating individuals pay for a whole or half garden plot through a yearly fee. If you are unable to afford that, there is also a scholarship program and sliding scale model. If you are fortuate enough to be able to afford more, you are encouraged contribute more in order to help subsidize the low income programs. All participants are required to volunteer 6 hrs/season to help maintain their community garden. This includes turning the compost, organizing the toolshed, and assisting other gardeners.',
         },
         {
-          content: "In Portland, ME, every year a survey is distributed to participants to assess the success of the urban agriculture program. Questions include how much food they were able to grow and how that affected their family's access to food. Overwhelmingly, they have come to find that individuals record that it does allow them and their families to include more vegetables in their diet at a reduced rate.",
+          content: "In Portland, Maine, every year a survey is distributed to participants in the urban agriculture program to assess its success. Questions include how much food they were able to grow and how that affected their family's access to food. Overwhelmingly, the administrators of the program have come to find that the vast majority of individuals report that the program allows them and their families to include more vegetables in their diet at a reduced rate.",
         },
         {
-          content: 'In Washington, D.C. urban farms function through regular lease structures. "Tenants" are typically respondible for the utilities of their urban farm, however in some cases park land might have water fee subsidies.',
+          content: 'In Washington, D.C. urban farms function through regular lease structures. "Tenants" are typically responsible for the utilities of their urban farm, however in some cases park land might have water fee subsidies.',
         },
         {
-          content: 'Urban farms, by their very nature, require more work on the part of the applicant. This is because of the scale and independent oversight that comes with urban farming. That said, that autonomy also allows urban farms to independently define and support their mission.',
+          content: 'Urban farms, by their very nature, require more work on the part of the participant. This is because of the scale and independent oversight that comes with urban farming. That said, this autonomy also allows urban farms to independently define and support their mission through fresh food.',
         },
         {
-          content: "In Washington, D.C., the majority of urban farms are located on district-owned park land. Because for-profit corporations can't profit on government owned land, they are also majority nonprofit organizations.",
+          content: "In Washington, D.C., the majority of urban farms are located on district-owned park land. Because for-profit corporations can't profit on government owned land, most of these organizations are nonprofit organizations.",
         },
         {
           content: "One of the greatest strengths of Washington, D.C.'s urban agriculture program is its corresponding network of urban agriculture professionals. Many of the urban farmers have been working in the space for over 10 years.",
         },
         {
-          content: 'In 2020, the Washington, D.C. urban agriculture department was created to help build resources for urban farms and agriculture. Some of their programs include: an annual grant program, a tax abatement program, the Land Lease Program, and a yearly urban agriculture conference. All of these programs support the overall goal of supporting a diversity of urban farms within Washington, D.C..',
+          content: 'In 2020, the Washington, D.C. urban agriculture department was created to help build resources for urban farms and agriculture. As a result, some of their programs include: an annual grant program, a tax abatement program, the Land Lease Program, and a yearly urban agriculture conference. All of these programs support the overall goal of supporting a diversity of urban farms within Washington, D.C..',
         },
         {
           content: "One key component of making urban agriculture equitable is differentiating locations between those that are being established as part of a trend and those that are being established to address a need. The best way to do this is to utilize community-centric planning when implementing potential locations and programs."
@@ -158,7 +159,7 @@ export default {
           content: "For the best results, plants need from 6-8 hours of direct sunlight to thrive. If you get less than this, you can still find success with herbs, but other plants will experience significantly lower yields."
         },
         {
-          content: "The beginning of the growing season is in early Spring each year. If you are looking to plant from seed, you should be planting between March and April. If you are growing your produce from transplants, you should plant in May. Of course, this differs for late-season plants, and it's best to refer to your agricultural climate map."
+          content: "The beginning of the growing season is in early Spring each year. In New York City, if you are looking to plant from seed, you should be planting between March and April. If you are growing your produce from transplants, you should plant in May. Of course, this differs for late-season plants, and it's always best to refer to your agricultural climate map."
         }
       ],
       currentMessage: 0,
@@ -239,7 +240,7 @@ export default {
         divTour.style.top = "65vh";
         divTour.style.left = "20vw";
         const divRes = this.$refs.results;
-        divRes.style.backgroundColor = "#ffffff";
+        divRes.style.backgroundColor = "#89f0c3";
         const divMap = this.$refs.map;
         divMap.style.zIndex = 10000;
       } else if (this.currentMessage === 6) {
@@ -249,6 +250,8 @@ export default {
         divTour.style.height = "24vh";
         divTour.style.top = "25vh";
         divTour.style.left = "0vw";
+        const divMap = this.$refs.map;
+        divMap.style.zIndex = 2;
       } else if (this.currentMessage === 7) {
         const divCon = this.$refs.confirm;
         divCon.style.backgroundColor = "#ffffff";
@@ -341,7 +344,8 @@ export default {
       });
 
       const totalSpaceLost = visibleFeatures.reduce((acc, feature) => {
-        return (acc + feature.properties['%SpaceLost']);
+        const spaceLost = parseFloat(feature.properties['%SpaceLost']);
+        return acc + Math.floor(spaceLost * 100) / 100;
       }, 0);
 
       const totalIndSrv = visibleFeatures.reduce((acc, feature) => {
@@ -353,7 +357,7 @@ export default {
       }, 0);
       
       this.featureCount = visibleFeatures.length;
-      this.openSpaceLost = Math.floor(totalSpaceLost*100);
+      this.openSpaceLost = Math.ceil(totalSpaceLost*100);
       this.totalIndSrv = totalIndSrv;
       this.foodInsSrv = Math.floor((foodIndSrv/totalIndSrv)*100);
     };
