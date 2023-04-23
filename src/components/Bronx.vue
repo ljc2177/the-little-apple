@@ -419,7 +419,7 @@ export default {
       this.isDownloadCSVSelected = false;
     }
 
-    this.$watch('isDownloadCSVSelected', (newValue, oldValue) => {
+    this.$watch('isDownloadCSVSelected', (newValue) => {
       if (newValue === true) {
       downloadCSV();
       }
