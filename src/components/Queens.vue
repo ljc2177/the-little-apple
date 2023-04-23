@@ -60,7 +60,6 @@
 
 <script>
 import mapboxgl from "mapbox-gl";
-import Mapbox from "mapbox-gl";
 import VueSlider from 'vue-slider-component';
 import 'vue-slider-component/theme/default.css';
 import Papa from 'papaparse';
@@ -186,16 +185,16 @@ export default {
       showInsights: false,
       isDownloadCSVSelected: false,
       options: {
-        dotOptions: [{
-          style: {
+      	dotOptions: [{
+        	style: {
             'border': '2px solid black',
-            'boxShadow': '1px 1px grey',
+      		  'boxShadow': '1px 1px grey',
           },
         },
         {
-          style: {
+        	style: {
             'border': '2px solid black',
-            'boxShadow': '1px 1px grey',
+      		  'boxShadow': '1px 1px grey',
           },
         }],
       }
@@ -359,6 +358,11 @@ export default {
       this.foodInsSrv = Math.floor((foodIndSrv/totalIndSrv)*100);
     };
 
+    map.on('mouseleave', 'my-layer', function () {
+      map.getCanvas().style.cursor = '';
+      popup.remove();
+    });
+
     this.$watch('area', () => {
       filterData['Acres'] = this.area;
       updateFilter();
@@ -456,6 +460,7 @@ export default {
         'font-family': 'roboto-condensed',
         'color': 'black',
         'border-top-color': '#89f0c3',
+        'color': 'black',
       };
     },
   },
@@ -587,6 +592,11 @@ export default {
   border: 2px solid black;
   box-shadow: 3px 0px grey;
   z-index: 900;
+}
+
+#custom-popup {
+  background-color: #fff;
+  z-index: 50000;
 }
 
 #results{
