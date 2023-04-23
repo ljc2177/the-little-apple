@@ -400,6 +400,7 @@ export default {
     });
 
     const downloadCSV = () => {
+      this.isDownloadCSVSelected = false;
       const features = map.queryRenderedFeatures({
         layers: ['bronx-5i80z3']
       });
@@ -420,7 +421,6 @@ export default {
 
     this.$watch('isDownloadCSVSelected', () => {
       downloadCSV();
-      this.isDownloadCSVSelected = false;
     })
   },
   computed: {
