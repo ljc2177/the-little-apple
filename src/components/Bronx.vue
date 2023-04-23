@@ -186,16 +186,16 @@ export default {
       showInsights: false,
       isDownloadCSVSelected: false,
       options: {
-      	dotOptions: [{
-        	style: {
+        dotOptions: [{
+          style: {
             'border': '2px solid black',
-      		  'boxShadow': '1px 1px grey',
+            'boxShadow': '1px 1px grey',
           },
         },
         {
-        	style: {
+          style: {
             'border': '2px solid black',
-      		  'boxShadow': '1px 1px grey',
+            'boxShadow': '1px 1px grey',
           },
         }],
       }
@@ -362,11 +362,6 @@ export default {
       this.foodInsSrv = Math.floor((foodIndSrv/totalIndSrv)*100);
     };
 
-    map.on('mouseleave', 'my-layer', function () {
-      map.getCanvas().style.cursor = '';
-      popup.remove();
-    });
-
     this.$watch('area', () => {
       filterData['Acres'] = this.area;
       updateFilter();
@@ -422,13 +417,14 @@ export default {
       a.click();
       document.body.removeChild(a);
       this.isDownloadCSVSelected = false;
+      this.isDownloadCSVSelected = false;
     }
 
     this.$watch('isDownloadCSVSelected', (newValue) => {
       if (newValue === true) {
-      downloadCSV();
+        downloadCSV();
       }
-    })
+    });
   },
   computed: {
     buttonStyle2() {
