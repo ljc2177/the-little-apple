@@ -78,7 +78,7 @@ export default {
           content: 'This a tool to help you determine the best potential future urban agriculture within NYC. Here, you have the power to decide what is best for the future of your community To learn more about how to use this tool, click "Next".'        },
         {
           title: 'Here is your interactive map of Staten Island',
-          content: 'This is where you will see which potential locations fit within your parameters. To filter your locations to a specific area, simply zoom in.'
+          content: 'This is where you will see which potential locations fit within your parameters. To filter your locations to a specific area, simply zoom in. For more information on a specific location, hover over it on the map.'
         },
         {
           title: 'This is the control panel',

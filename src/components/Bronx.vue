@@ -79,7 +79,7 @@ export default {
         },
         {
           title: 'Here is your interactive map of the Bronx',
-          content: 'This is where you will see which potential locations fit within your parameters. To filter your locations to a specific area, simply zoom in.'
+          content: 'This is where you will see which potential locations fit within your parameters. To filter your locations to a specific area, simply zoom in. For more information on a specific location, hover over it on the map.'
         },
         {
           title: 'This is the control panel',
