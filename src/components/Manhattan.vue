@@ -232,7 +232,7 @@ export default {
         const divUPL = this.$refs.upl;
         divUPL.style.border = "3px solid yellow";
         const divTour = this.$refs.tour;
-        divTour.style.height = "13vh";
+        divTour.style.height = "15vh";
         divTour.style.left = "0vw";
         divTour.style.top = "40vh";
       } else if (this.currentMessage === 3) {
