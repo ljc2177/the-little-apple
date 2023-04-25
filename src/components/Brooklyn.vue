@@ -215,7 +215,7 @@ export default {
         divMap.style.zIndex = 10000;
         divMap.style.border = "2px solid yellow";
         const divTour = this.$refs.tour;
-        divTour.style.height = "21vh";
+        divTour.style.height = "23vh";
         divTour.style.left = "-28.15vw";
         divTour.style.top = "2.25vh";
       } else if (this.currentMessage === 2) {
@@ -231,7 +231,7 @@ export default {
         const divUPL = this.$refs.upl;
         divUPL.style.border = "3px solid yellow";
         const divTour = this.$refs.tour;
-        divTour.style.height = "15vh";
+        divTour.style.height = "13vh";
         divTour.style.left = "0vw";
         divTour.style.top = "40vh";
       } else if (this.currentMessage === 3) {
