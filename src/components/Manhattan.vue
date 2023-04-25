@@ -7,6 +7,7 @@
           <h5>{{ message.content }}</h5>
           <button v-if="currentMessage < messages.length - 1" @click="next">Next</button>
           <button v-else @click="showTour = !showTour">Get Started</button>
+          <button v-if="currentMessage  == 0" @click="showTour = !showTour">Skip</button>
         </div>
       </div>  
       <div id="insights" ref="insights" v-if="showInsights">
@@ -19,7 +20,7 @@
       <div id="confirm" v-if="showConfirm">
         <img src="@/assets/LittleAppleLogo.png" style="width:35vw;">
         <h2 style="text-align: center; padding-bottom:10vh;">Thank you so much for using the Little Apple to explore the possibilities for urban agriculture within your community. Here are your results:</h2>
-        <h2 id="headers2">Locations Added:<br>Open Space Lost:<img src="@/assets/tooltip.png" title="Calculated only considering public land such as parks and recreational open spaces." style="height:1.5vh; width:1.5vh; padding-top:0vh; padding-bottom:0px;"><br>Individuals Served:<img src="@/assets/tooltip.png" title="Calculated based on the total area of each location. One 6x6 raised bed can serve an individual for one year by producing over 100lbs of produce. This calculation also takes into account spatial needs such as a shed." style="height:1.5vh; width:1.5vh; padding-top:0px;"></h2>
+        <h2 id="headers2">Total Locations:<br>Open Space Lost:<img src="@/assets/tooltip.png" title="Calculated only considering public land such as parks and recreational open spaces." style="height:1.5vh; width:1.5vh; padding-top:0vh; padding-bottom:0px;"><br>Individuals Served:<img src="@/assets/tooltip.png" title="Calculated based on the total area of each location. One 6x6 raised bed can serve an individual for one year by producing over 100lbs of produce. This calculation also takes into account spatial needs such as a shed." style="height:1.5vh; width:1.5vh; padding-top:0px;"></h2>
         <h2 id="data2">{{ featureCount }}<br>{{ openSpaceLost }}%<br>{{ totalIndSrv }}<br>({{ foodInsSrv }}% food insecure)<img src="@/assets/tooltip.png" title="Food insecurity data was retrieved from Feeding America and assessed by census block utilizing 2020 census data. Calculated using the distance of each lot to areas of food insecurity." style="height:1.5vh; width:1.5vh; padding-top:0vh; padding-bottom:0px;"></h2>
         <p style="padding-bottom:2vh; margin-top:0vh;">Below, you can export your locations as a CSV, start over, or return to your progress.</p>
         <div id="buttons">
@@ -43,17 +44,19 @@
         <button ref="vl" :class="{'active': isVacantLotsSelected}" @click="isVacantLotsSelected = !isVacantLotsSelected" :style="buttonStyle2">Vacant Land</button>
         <button ref="upl" :class="{'active': isUnlicensedParkingLotsSelected}" @click="isUnlicensedParkingLotsSelected = !isUnlicensedParkingLotsSelected" :style="buttonStyle2">Unlicensed Parking Lots</button>
       </div>
-      <h3>Total Area</h3>
-      <vue-slider v-bind="options" ref="slider" v-model="area" :min="0" :max="841" :tooltip-formatter="'{value} acre(s)'" :clickable="false" :enable-cross="false" :range="true" :style="sliderStyle" :railStyle="dotStyle" :processStyle="railStyle" :tooltipStyle="railStyle"></vue-slider>
-      <h3>Daily Sunlight<img src="@/assets/tooltip.png" title="Daily sunlight was calculated utilizing sunlight analysis on 3d models of the city through Grasshopper and Rhino. The analysis was performed for the dates at the beginning of growing season in mid-April to best estimate total sunlight for the entire growing season through Fall." style="height:1.5vh; width:1.5vh; padding-top:0px;"></h3>
-      <vue-slider v-bind="options" v-model="sunlight" :min="2" :max="16" :range="true" :tooltip-formatter="'{value} hours'" :clickable="false" :enable-cross="false" :style="sliderStyle" :railStyle="dotStyle" :processStyle="railStyle" :tooltipStyle="railStyle"></vue-slider>
-      <h3>Proximity to Highways</h3>
-      <vue-slider v-bind="options" v-model="highways" :min="0" :max="2.1" :interval="0.1" :range="true" :tooltip-formatter="'{value} mile(s)'" :clickable="false" :enable-cross="false" :style="sliderStyle" :railStyle="dotStyle" :processStyle="railStyle" :tooltipStyle="railStyle"></vue-slider>
-      <h3>Proximity to Food Insecurity<img src="@/assets/tooltip.png" title="Food insecurity data was retrieved from Feeding America and assessed by census block utilizing 2020 census data." style="height:1.5vh; width:1.5vh; padding-top:0px;"></h3>
-      <vue-slider v-bind="options" v-model="foodins" :min="0" :max="3.4" :interval="0.1" :range="true" :tooltip-formatter="'{value} mile(s)'" :clickable="false" :enable-cross="false" :style="sliderStyle" :railStyle="dotStyle" :processStyle="railStyle" :tooltipStyle="railStyle"></vue-slider>
-      <h3>Proximity to Low Income Households<img src="@/assets/tooltip.png" title="Low income households were defined by the 2020 census and corresponding poverty thresholds." style="height:1.5vh; width:1.5vh; padding-top:0px;"></h3>
-      <vue-slider v-bind="options" v-model="lowinc" :min="0" :max="3.4" :interval="0.1" :range="true" :tooltip-formatter="'{value} mile(s)'" :clickable="false" :enable-cross="false" :style="sliderStyle" :railStyle="dotStyle" :processStyle="railStyle" :tooltipStyle="railStyle"></vue-slider>
-      <br><button ref="clear" :style="buttonStyle2" @click="clearFilters()">Clear All Filters</button>
+      <div ref="sliders" style="display: flex; flex-direction: column; align-items: center; border-radius: 1rem;">
+        <h3>Total Area</h3>
+        <vue-slider v-bind="options" ref="slider" v-model="area" :min="0" :max="841" :tooltip-formatter="'{value} acre(s)'" :clickable="false" :enable-cross="false" :range="true" :style="sliderStyle" :railStyle="dotStyle" :processStyle="railStyle" :tooltipStyle="railStyle"></vue-slider>
+        <h3>Daily Sunlight<img src="@/assets/tooltip.png" title="Daily sunlight was calculated utilizing sunlight analysis on 3d models of the city through Grasshopper and Rhino. The analysis was performed for the dates at the beginning of growing season in mid-April to best estimate total sunlight for the entire growing season through Fall." style="height:1.5vh; width:1.5vh; padding-top:0px;"></h3>
+        <vue-slider v-bind="options" v-model="sunlight" :min="2" :max="16" :range="true" :tooltip-formatter="'{value} hours'" :clickable="false" :enable-cross="false" :style="sliderStyle" :railStyle="dotStyle" :processStyle="railStyle" :tooltipStyle="railStyle"></vue-slider>
+        <h3>Proximity to Highways</h3>
+        <vue-slider v-bind="options" v-model="highways" :min="0" :max="2.1" :interval="0.1" :range="true" :tooltip-formatter="'{value} mile(s)'" :clickable="false" :enable-cross="false" :style="sliderStyle" :railStyle="dotStyle" :processStyle="railStyle" :tooltipStyle="railStyle"></vue-slider>
+        <h3>Proximity to Food Insecurity<img src="@/assets/tooltip.png" title="Food insecurity data was retrieved from Feeding America and assessed by census block utilizing 2020 census data." style="height:1.5vh; width:1.5vh; padding-top:0px;"></h3>
+        <vue-slider v-bind="options" v-model="foodins" :min="0" :max="3.4" :interval="0.1" :range="true" :tooltip-formatter="'{value} mile(s)'" :clickable="false" :enable-cross="false" :style="sliderStyle" :railStyle="dotStyle" :processStyle="railStyle" :tooltipStyle="railStyle"></vue-slider>
+        <h3>Proximity to Low Income Households<img src="@/assets/tooltip.png" title="Low income households were defined by the 2020 census and corresponding poverty thresholds." style="height:1.5vh; width:1.5vh; padding-top:0px;"></h3>
+        <vue-slider v-bind="options" v-model="lowinc" :min="0" :max="3.4" :interval="0.1" :range="true" :tooltip-formatter="'{value} mile(s)'" :clickable="false" :enable-cross="false" :style="sliderStyle" :railStyle="dotStyle" :processStyle="railStyle" :tooltipStyle="railStyle"></vue-slider>
+        <br><button ref="clear" :style="buttonStyle2" @click="clearFilters()">Clear All Filters</button>
+      </div>
     </div>
   </div>
 </template>
@@ -72,7 +75,7 @@ export default {
       messages: [
       {
           title: 'Welcome to the Little Apple!',
-          content: 'Here are some tools to get you started.'
+          content: 'This a tool to help you determine the best potential future urban agriculture within NYC. Here, you have the power to decide what is best for the future of your community To learn more about how to use this tool, click "Next".'
         },
         {
           title: 'Here is your interactive map of Manhattan',
@@ -211,41 +214,67 @@ export default {
       if (this.currentMessage === 1) {
         const divMap = this.$refs.map;
         divMap.style.zIndex = 10000;
+        divMap.style.border = "2px solid yellow";
         const divTour = this.$refs.tour;
         divTour.style.height = "21vh";
-        divTour.style.left = "-30.15vw";
-        divTour.style.top = "-0.25vh";
+        divTour.style.left = "-28.15vw";
+        divTour.style.top = "2.25vh";
       } else if (this.currentMessage === 2) {
         const divMap = this.$refs.map;
         divMap.style.zIndex = 2;
+        divMap.style.border = "none";
         const divCont = this.$refs.controls;
         divCont.style.zIndex = 10000;
+        const divOS = this.$refs.os;
+        divOS.style.border = "3px solid yellow";
+        const divVL = this.$refs.vl;
+        divVL.style.border = "3px solid yellow";
+        const divUPL = this.$refs.upl;
+        divUPL.style.border = "3px solid yellow";
         const divTour = this.$refs.tour;
         divTour.style.height = "13vh";
         divTour.style.left = "0vw";
         divTour.style.top = "40vh";
       } else if (this.currentMessage === 3) {
+        const divSlide = this.$refs.sliders;
+        divSlide.style.border = "2px solid yellow"
         const divTour = this.$refs.tour;
         divTour.style.height = "17vh";
         divTour.style.top = "60vh";
+        const divOS = this.$refs.os;
+        divOS.style.border = "3px solid #89f0c3";
+        const divVL = this.$refs.vl;
+        divVL.style.border = "3px solid #89f0c3";
+        const divUPL = this.$refs.upl;
+        divUPL.style.border = "3px solid #89f0c3";
       } else if (this.currentMessage === 4) {
+        const divSlide = this.$refs.sliders;
+        divSlide.style.border = "none"
         const divRes = this.$refs.results;
-        divRes.style.backgroundColor = "yellow";
+        divRes.style.border = "2px solid yellow";
         const divTour = this.$refs.tour;
         divTour.style.height = "15vh";
         divTour.style.top = "13vh";
       } else if (this.currentMessage === 5) {
+        this.sunlight = [6,16];
+        this.isVacantLotsSelected = true;
+        this.isUnlicensedParkingLotsSelected = true;
+        this.foodins = [0,1];
         const divTour = this.$refs.tour;
         divTour.style.height = "15vh";
         divTour.style.top = "65vh";
         divTour.style.left = "20vw";
         const divRes = this.$refs.results;
-        divRes.style.backgroundColor = "#89f0c3";
+        divRes.style.border = "2px solid black";
         const divMap = this.$refs.map;
         divMap.style.zIndex = 10000;
       } else if (this.currentMessage === 6) {
+        this.sunlight = [2,16];
+        this.isVacantLotsSelected = false;
+        this.isUnlicensedParkingLotsSelected = false;
+        this.foodins = [0,3.4];
         const divCon = this.$refs.confirm;
-        divCon.style.backgroundColor = "yellow";
+        divCon.style.border = "2px solid yellow";
         const divTour = this.$refs.tour;
         divTour.style.height = "24vh";
         divTour.style.top = "25vh";
@@ -254,7 +283,7 @@ export default {
         divMap.style.zIndex = 2;
       } else if (this.currentMessage === 7) {
         const divCon = this.$refs.confirm;
-        divCon.style.backgroundColor = "#ffffff";
+        divCon.style.border = "2px solid black";
         const divCont = this.$refs.controls;
         divCont.style.zIndex = 900;
         const divMap = this.$refs.map;
@@ -362,6 +391,44 @@ export default {
       this.foodInsSrv = Math.floor((foodIndSrv/totalIndSrv)*100);
     };
 
+    const popup = new mapboxgl.Popup({
+      closeButton: false,
+      closeOnClick: false,
+      className: 'my-popup',
+      anchor: 'top',
+      offset: [600, 0], // Adjust the offset as needed
+      maxWidth: 'none',
+    });
+
+    map.on('mouseenter', 'manhattan-b363c5', function(e) {
+      // Change the cursor style as a visual cue that the feature can be clicked.
+      map.getCanvas().style.cursor = 'pointer';
+
+      const feature = e.features[0];
+
+      // Use the feature's properties to populate the popup content.
+      const popupContent = `
+        <p style="background-color:white; font-family: roboto-mono; width: 20vw; font-size: 0.75vw; border-radius: 1vw; border: 2px solid black; box-shadow: 3px 3px grey; padding: 10px;"><b>Total Area:</b> ${Math.round(feature.properties.Acres)} acre(s)<br>
+        <b>Daily Sunlight:</b> ${Math.round(feature.properties.Sun_Hours)} hour(s)<br>
+        <b>Distance from Highways:</b> ${feature.properties.Distance_H} mile(s)<br>
+        <b>Proximity to Food Insecurity:</b> ${feature.properties.Distance_F} mile(s)<br>
+        <b>Proximity to Low Income Households:</b> ${feature.properties.Distance_P} mile(s)</p>
+      `;
+
+      // Set the popup content and location, and add it to the map.
+      popup.setLngLat(e.lngLat)
+        .setHTML(popupContent)
+        .addTo(map);
+    });
+
+    map.on('mouseleave', 'manhattan-b363c5', function() {
+      // Change the cursor style back to default.
+      map.getCanvas().style.cursor = '';
+
+      // Remove the popup from the map.
+      popup.remove();
+    });
+
     this.$watch('area', () => {
       filterData['Acres'] = this.area;
       updateFilter();
@@ -387,16 +454,49 @@ export default {
       updateFilter();
     });
 
+    const osIsClicked = () => {
+      if (this.isOpenSpacesSelected == true) {
+        const divOS = this.$refs.os;
+        divOS.style.backgroundColor = "lightgrey";
+      } else {
+        const divOS = this.$refs.os;
+        divOS.style.backgroundColor = "white";
+      }
+    };
+
+    const vlIsClicked = () => {
+      if (this.isVacantLotsSelected == true) {
+        const divVL = this.$refs.vl;
+        divVL.style.backgroundColor = "lightgrey";
+      } else {
+        const divVL = this.$refs.vl;
+        divVL.style.backgroundColor = "white";
+      }
+    };
+
+    const uplIsClicked = () => {
+      if (this.isUnlicensedParkingLotsSelected == true) {
+        const divUPL = this.$refs.upl;
+        divUPL.style.backgroundColor = "lightgrey";
+      } else {
+        const divUPL = this.$refs.upl;
+        divUPL.style.backgroundColor = "white";
+      }
+    };
+
     this.$watch('isOpenSpacesSelected', () => {
       updateFilter();
+      osIsClicked();
     });
 
     this.$watch('isVacantLotsSelected', () => {
       updateFilter();
+      vlIsClicked();
     });
 
     this.$watch('isUnlicensedParkingLotsSelected', () => {
       updateFilter();
+      uplIsClicked();
     });
 
     const downloadCSV = () => {
@@ -521,7 +621,7 @@ export default {
   position: absolute;
   color: black;
   width: 40vw;
-  height: 13vh;
+  height: 22vh;
   background-color: #ffffff;
   border: 2px solid black;
   box-shadow: 3px 3px grey;
