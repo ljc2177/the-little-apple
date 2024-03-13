@@ -16,6 +16,7 @@
     "follow-redirects": "^1.15.5",
     "geojson-filter": "^0.1.4",
     "install": "^0.13.0",
+    "ip": "^2.0.1",
     "json2csv": "^6.0.0-alpha.2",
     "npm": "^9.6.4",
     "papaparse": "^5.4.1",
