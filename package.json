@@ -11,6 +11,7 @@
     "@babel/traverse": "^7.23.9",
     "axios": "^1.6.0",
     "babel": "^6.23.0",
+    "braces": "^3.0.3",
     "core-js": "^3.8.3",
     "d3": "^7.8.4",
     "express": "^4.19.2",
@@ -27,14 +28,15 @@
     "vue-router": "^3.6.5",
     "vue-simple-range-slider": "^1.0.0",
     "vue-tooltip": "^0.1.0",
-    "vuejs-title": "^1.0.16"
+    "vuejs-title": "^1.0.16",
+    "ws": "^8.18.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
     "@babel/eslint-parser": "^7.12.16",
     "@vue/cli": "^5.0.8",
-    "@vue/cli-plugin-babel": "~5.0.0",
-    "@vue/cli-plugin-eslint": "~5.0.0",
+    "@vue/cli-plugin-babel": "^5.0.8",
+    "@vue/cli-plugin-eslint": "^5.0.8",
     "@vue/cli-service": "~5.0.0",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
