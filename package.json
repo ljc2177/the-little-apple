@@ -20,6 +20,7 @@
     "follow-redirects": "^1.15.6",
     "foreground-child": "^3.3.1",
     "geojson-filter": "^0.1.4",
+    "got": "^11.8.6",
     "install": "^0.13.0",
     "ip": "^2.0.1",
     "json2csv": "^6.0.0-alpha.2",
