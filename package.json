@@ -16,7 +16,7 @@
     "core-js": "^3.8.3",
     "cross-spawn": "^7.0.6",
     "d3": "^7.8.4",
-    "express": "^4.21.2",
+    "express": "^4.22.1",
     "follow-redirects": "^1.15.6",
     "foreground-child": "^3.3.1",
     "geojson-filter": "^0.1.4",
